@@ -4,11 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+numpy = "*"
+cython = ">=3.0.0b1"
+setuptools = "*"
+mongoengine = "*"
+ipython = "*"
+zialopolis-server = {editable = true, path = "."}
+zialopolis = {editable = true, path = "."}
 
 [dev-packages]
-numpy = "*"
-sqlalchemy = "*"
-cython = ">=3.0.0b1"
 
 [requires]
 python_version = "3.11"
