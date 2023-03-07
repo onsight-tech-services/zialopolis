@@ -40,9 +40,15 @@ exec s6-overlay-suexec \
   /package/admin/s6-overlay-3.1.2.1/libexec/stage0 \
   "$@"
 
-wg genkey > /data/private
-wg pubkey < /data/private > /data/public
-ip -6 link add wg0 type wireguard
-ip addr add fe80::1/64 dev wg0
-wg set wg0 private-key /data/private
-ip -6 link set wg0 up
+PRIVATE_KEY=/data/private
+PUBLIC_KEY=/data/public
+if [! -f "$PRIVATE_KEY" || cat "$PUBLIC_KEY" | test -z ] ; then
+  wg genkey > /data/private
+fi
+if [! -f "$PUBLIC_KEY" || cat "$PUBLIC_KEY" | test -z ] ; then
+  wg pubkey < /data/private > /data/public
+fi
+# ip -6 link add wg0 type wireguard
+# ip addr add fe80::1/64 dev wg0
+# wg set wg0 private-key /data/private
+# ip -6 link set wg0 up
