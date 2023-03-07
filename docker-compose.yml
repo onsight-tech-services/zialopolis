@@ -20,15 +20,16 @@ services:
       - /usr/src:/usr/src:ro
     ports:
       - 51820:51820/udp
+      - "127.0.0.1:27017:27017"
     sysctls:
       - net.ipv4.conf.all.rp_filter=2
       - net.ipv4.conf.default.rp_filter=2
+      - net.ipv6.conf.all.disable_ipv6=0
     restart: unless-stopped
 
   mongo:
     image: mongo:latest
     ports:
-      - "127.0.0.1:27017:27017"
     volumes:
       - mongo-data:/data/db
       - wireguard-data:/data/wireguard:ro
