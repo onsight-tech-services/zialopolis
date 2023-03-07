@@ -1,0 +1,36 @@
+services:
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - SERVERURL= #optional
+      - SERVERPORT=51820 #optional
+      - PEERS=2
+      - PEERDNS=auto #optional
+      - INTERNAL_SUBNET=10.13.13 #optional
+    volumes:
+      - /path/to/appdata/config:/config
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.rp_filter=2
+      - net.ipv4.conf.default.rp_filter=2
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    network_mode: container:wireguard
+
+volumes:
+  mongo-data:
+    external: true
