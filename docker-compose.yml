@@ -19,7 +19,7 @@ services:
       - wireguard-data:/data
       - /usr/src:/usr/src:ro
     ports:
-      - 51820:51820/udp
+      - 42069:51820/udp
       - "127.0.0.1:27017:27017"
     sysctls:
       - net.ipv4.conf.all.rp_filter=2
