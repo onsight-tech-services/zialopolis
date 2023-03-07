@@ -29,7 +29,6 @@ services:
 
   mongo:
     image: mongo:latest
-    ports:
     volumes:
       - mongo-data:/data/db
       - wireguard-data:/data/wireguard:ro
